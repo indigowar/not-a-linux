@@ -20,7 +20,7 @@ kernel.bin: boot/kernel_entry.o ${OBJ}
 
 # Used for debugging purposes
 kernel.elf: boot/kernel_entry.o ${OBJ}
-	i386-elf-ld -o $@ -Ttext 0x1000 $^ 
+	i386-elf-ld -o $@ -Ttext 0x1000 $^
 
 run: os-image.bin
 	qemu-system-i386 -fda os-image.bin
@@ -44,3 +44,7 @@ debug: os-image.bin kernel.elf
 clean:
 	rm -rf *.bin *.dis *.o os-image.bin *.elf
 	rm -rf kernel/*.o boot/*.bin drivers/*.o boot/*.o
+
+format:
+	clang-format -i kernel/*.[ch]
+	clang-format -i drivers/*.[ch]
